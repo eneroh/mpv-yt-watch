@@ -1,11 +1,12 @@
 #!/bin/bash
 
-### mpv_yt_watch_v4.sh ###
+### mpv-yt-watch.sh ###
 # - Added search string functionality, now you no longer need a browser at all really
 # - Need for url validation no longer required
 # - Removed unnecessary usage of caching to stdoutput and stderr
 # - Addition of 240p resolution option
 # - Change over from search variable grep to cache variable grep, allowing for all language support (korean, japanese etc.) [may require wqy-zenhei on arch linux]
+# - Replaced relevant echoes and reads with just reads
 
 read -p "Input search string <lowercase only>: " search
 echo "You are searching for: $search"
