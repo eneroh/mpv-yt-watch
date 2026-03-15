@@ -5,7 +5,7 @@
 # - Need for url validation no longer required
 # - Removed unnecessary usage of caching to stdoutput and stderr
 # - Addition of 240p resolution option
-# - Change over from search variable grep to cache variable grep, allowing for all language support (korean, japanese etc.)
+# - Change over from search variable grep to cache variable grep, allowing for all language support (korean, japanese etc.) [may require wqy-zenhei on arch linux]
 
 echo "Input search string <lowercase only>: "
 read search
