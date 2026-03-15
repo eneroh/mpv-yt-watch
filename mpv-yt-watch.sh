@@ -6,7 +6,7 @@
 # - Removed unnecessary usage of caching to stdoutput and stderr
 # - Addition of 240p resolution option
 # - Change over from search variable grep to cache variable grep, allowing for all language support (korean, japanese etc.) [may require wqy-zenhei on arch linux]
-# - Replaced relevant echoes and reads with just reads
+# - Replaced relevant echoes and reads with just reads, simplifying the code by a few lines
 
 read -p "Input search string <lowercase only>: " search
 echo "You are searching for: $search"
