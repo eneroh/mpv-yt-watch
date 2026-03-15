@@ -15,4 +15,4 @@ A combination of both mpv and yt-dlp to allow users to watch youtube videos via 
 
 ### Known Issues ###
 - Certain symbols specifically, [] $ cause the result variable to not work correctly, breaking communication with mpv and erroring out overall
-- If you use this script excessively on the same video (during testing specifically), your ip does get logged as a bot for an hour or two, during this time you are unable to watch videos. Sign in apparently fixes this, haven't tried this but not particularly a hassle. VPN fixes this issue.
+- If you use this script excessively on the same video (during testing specifically), your ip does get logged as a bot for an hour or two, during this time you are unable to watch videos. Sign in apparently fixes this, haven't tried this but not particularly a hassle. VPN is a workaround.
