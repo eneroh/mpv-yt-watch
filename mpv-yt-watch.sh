@@ -9,7 +9,7 @@
 # - Replaced relevant echoes and reads with just reads, simplifying the code by a few lines
 # - File extension selector implemented
 # - File download option at the end of the script w/ confirmation prompt. More granularity to the user. You are welcome aha
-# - Removed former number based resolution. This is what broke the script previously and caused errors. You will now need to input a resolution but now there is no possibility for script breaking. WHATSOEVER. Don't test this aha
+# - Removed former single digit number based resolution. This is what broke the script previously and caused errors. You will now need to input a resolution but now there is no possibility for script breaking. WHATSOEVER. Don't test this aha
 # - Inclusion of 144p video res, figured if I'm trying to compete, I might as well meet the youtube standard. 144p all the way to 4K. LETS GO BAYBEEEEEE!
 # - If statements replaced with cases. Actually much better in this use case and fixed a lot of headaches.
 # - I have tested numerous videos over numerous languages, video resolutions and extensions and I can't seem to break it anymore. If you are an experienced tester, please try and let me know.
