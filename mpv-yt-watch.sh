@@ -69,11 +69,11 @@ case $dlConfirm in
 		echo "Your video has been saved as $result"
 		echo "Now Streaming: $search"
 		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
-		echo "Thank you for using this mpv-yt-watch" 
+		echo "Thank you for using mpv-yt-watch" 
 	;;
 	n|N)
 		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
-		echo "Thank you for using this mpv-yt-watch" 
+		echo "Thank you for using mpv-yt-watch" 
 	;;
 	*)
 		echo "Invalid input! Please try again."
