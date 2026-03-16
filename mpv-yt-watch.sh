@@ -51,7 +51,7 @@ case $formatRes in
 	2160)
 	;;
 	*)
-		exit 1
+		exit 1;
 	;;
 esac
 
