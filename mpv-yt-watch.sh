@@ -14,14 +14,21 @@
 # - If statements replaced with cases. Actually much better in this use case and fixed a lot of headaches.
 # - I have tested numerous videos over numerous languages, video resolutions and extensions and I can't seem to break it anymore. If you are an experienced tester, please try and let me know.
 # - A very special thanks to: another-danny for improving upon the script. Video res formats are now much better and streamlined. He also added some good bash code hygiene practices I was unfamiliar with.
+# - Added native yt-dlp --get-title and --get-filename flags, fully fixing any complications with video titles. $ [] and other symbols. Even languages, will now no longer affect outputs. This band-aid, I have noticed slightly more latency towards the start and end of the script but honestly, it's much better than trying to develop my own messy symbol parser.
 
-read -rp "Input search string [ Song | Music Artist | Youtuber ]: " -- search
+read -rp "Input search string [Song | Music Artist | Youtuber]: " -- search
 if [[ -z "$search" ]]; then
   echo "Invalid input! Please try again!"
   exit 1;
 else
   echo "You are searching for: $search"
-  searchFormat=$(yt-dlp ytsearch1:"$search" --list-formats)
+  
+  videoUrl=$(yt-dlp --get-id ytsearch1:"$search")
+  videoUrl="https://youtube.com/watch?v=$videoUrl"
+  
+  title=$(yt-dlp --get-title "$videoUrl")
+  echo "Video located: $title"
+  searchFormat=$(yt-dlp ytsearch1:"$videoUrl" --list-formats)
 
   formatExt=$(echo "${searchFormat}" | grep -e 'webm\|mp4' | grep -v 'audio only' | awk '{print $2;}' | sort -u | nl)
   echo "$formatExt"
@@ -64,19 +71,16 @@ else
 	;;
   esac
 
-  videoUrl=$(yt-dlp --get-id ytsearch1:"$search")
-  videoUrl="https://youtube.com/watch?v=$videoUrl"
-
-  read -rp "Would you like to save a copy of this video: $search? [y/N]: " -- dlConfirm
+  read -rp "Would you like to save a copy of this video: $title? [y/N]: " -- dlConfirm
   dlConfirm=${dlConfirm:-N}
 
   case $dlConfirm in
 	y|Y)
 		echo "Downloading file" 
-		cache=$(yt-dlp ytsearch1:"$search" | grep "Destination" | tail -n 1 | sed 's/\[download] Destination: //g' | sed 's/.\{23\}$//')
-		result=$(ls | grep -i "$cache")
-		echo "Your video has been saved as $result"
-		echo "Now Streaming: $search"
+		videoDl=$(yt-dlp "$videoUrl")
+		result=$(yt-dlp --get-filename "$videoUrl")
+		echo "Your video has been saved as: $result"
+		echo "Now Streaming: $title"
 		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
 		echo "Thank you for using mpv-yt-watch" 
 	;;
