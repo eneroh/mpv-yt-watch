@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### mpv_yt_watch_v4.sh ###
+### mpv-yt-dlp ###
 # - Added search string functionality, now you no longer need a browser at all really
 # - Need for url validation no longer required
 # - Removed unnecessary usage of caching to stdoutput and stderr
