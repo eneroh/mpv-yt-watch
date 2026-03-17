@@ -22,6 +22,9 @@ A combination of both mpv and yt-dlp to allow users to watch youtube videos via 
 - File extension options (instead of having the default webm, you can use the option of mp4)
 - Adding video stream option functionality, you no longer will HAVE to download the file locally onto your machine. This should also resolve the issue of: [] $. At least for streaming. Pending download option fix.
 - Video download now optional, not required
+
+### Special Thanks ###
+another-danny - Fellow bash enthusiast aha
   
 ### Known Issues ###
 - Certain symbols specifically, [] $ mess with the download $result variable at ls | grep -i $result. Returning blank. Can be observed when downloading video: bazooka granny (LMAO)
