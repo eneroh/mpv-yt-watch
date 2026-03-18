@@ -15,24 +15,27 @@
 # - I have tested numerous videos over numerous languages, video resolutions and extensions and I can't seem to break it anymore. If you are an experienced tester, please try and let me know.
 # - A very special thanks to: another-danny for improving upon the script. Video res formats are now much better and streamlined. He also added some good bash code hygiene practices I was unfamiliar with.
 # - Added native yt-dlp --get-title and --get-filename flags, fully fixing any complications with video titles. $ [] and other symbols. Even languages, will now no longer affect outputs. This band-aid, I have noticed slightly more latency towards the start and end of the script but honestly, it's much better than trying to develop my own messy symbol parser.
+# - Performing sanitization on my inputs, printf to replace echos, read's are now strictly for limiting inputs i.e. -nX (x being how many characters I allow)
 
-read -rp "Input search string [Song | Music Artist | Youtuber]: " -- search
+printf "Input search string [Song | Music Artist | Youtuber]: "
+read -rn1 -- search
 if [[ -z "$search" ]]; then
-  echo "Invalid input! Please try again!"
+  printf "Invalid input! Please try again!"
   exit 1;
 else
-  echo "You are searching for: $search"
+  printf "You are searching for: $search"
   
   videoUrl=$(yt-dlp --get-id ytsearch1:"$search")
   videoUrl="https://youtube.com/watch?v=$videoUrl"
   
   title=$(yt-dlp --get-title "$videoUrl")
-  echo "Video located: $title"
+  printf "Video located: $title"
   searchFormat=$(yt-dlp ytsearch1:"$videoUrl" --list-formats)
 
-  formatExt=$(echo "${searchFormat}" | grep -e 'webm\|mp4' | grep -v 'audio only' | awk '{print $2;}' | sort -u | nl)
-  echo "$formatExt"
-  read -rp "Choose extension format (Default: empty) [1-2]: " -- formatExt
+  formatExt=$(printf "${searchFormat}" | grep -e 'webm\|mp4' | grep -v 'audio only' | awk '{print $2;}' | sort -u | nl)
+  printf "$formatExt"
+  printf "Choose extension format (Default: empty) [1-2]: " 
+  read -rn1 -- formatExt
   case $formatExt in
 	1)
 		ext=[ext=mp4]
@@ -44,11 +47,12 @@ else
 	;;
   esac
 
-  formattedSearch=$(echo "${searchFormat}" | grep -e '144p\|240p\|480p\|720p\|1080p\|1440p\|2160p' | awk '{print $14;}' | tr -s '\n' | tr -d ',' | uniq)
+  formattedSearch=$(printf "${searchFormat}" | grep -e '144p\|240p\|480p\|720p\|1080p\|1440p\|2160p' | awk '{print $14;}' | tr -s '\n' | tr -d ',' | uniq)
 
-  formattedLine=$(echo "$formattedSearch" | sed -e :a -e '$!N; s/\n/ | /; ta' | sed -e 's/p60//g' | sed -e 's/p//g')
-  read -rp "${formattedSearch[@]}"$'\n'"Choose video resolution format (Default: best) [${formattedLine}]: " -- formatRes
-  formatRes=${formatRes:-$(echo "${formattedSearch[@]}" | sort -t p -n -k 1 | tail -1 | sed -e 's/p//g')}
+  formattedLine=$(printf "$formattedSearch" | sed -e :a -e '$!N; s/\n/ | /; ta' | sed -e 's/p60//g' | sed -e 's/p//g')
+  printf "${formattedSearch[@]}"$'\n'"Choose video resolution format (Default: best) [${formattedLine}]: " 
+  read -rn4 -- formatRes
+  formatRes=${formatRes:-$(printf "${formattedSearch[@]}" | sort -t p -n -k 1 | tail -1 | sed -e 's/p//g')}
 
   case $formatRes in
 	144)	
@@ -71,7 +75,8 @@ else
 	;;
   esac
 
-  read -rp "Would you like to save a copy of this video: $title? [y/N]: " -- dlConfirm
+  printf "Would you like to save a copy of this video: $title? [y/N]: " 
+  read -rn1 -- dlConfirm
   dlConfirm=${dlConfirm:-N}
 
   case $dlConfirm in
@@ -79,17 +84,17 @@ else
 		echo "Downloading file" 
 		videoDl=$(yt-dlp "$videoUrl")
 		result=$(yt-dlp --get-filename "$videoUrl")
-		echo "Your video has been saved as: $result"
-		echo "Now Streaming: $title"
+		printf "Your video has been saved as: $result"
+		printf "Now Streaming: $title"
 		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
-		echo "Thank you for using mpv-yt-watch" 
+		printf "Thank you for using mpv-yt-watch" 
 	;;
 	n|N)
 		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
-		echo "Thank you for using mpv-yt-watch" 
+		printf "Thank you for using mpv-yt-watch" 
 	;;
 	*)
-		echo "Invalid input! Please try again."
+		printf "Invalid input! Please try again."
 	;;
   esac
 fi
