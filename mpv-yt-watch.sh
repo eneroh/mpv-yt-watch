@@ -15,7 +15,7 @@
 # - I have tested numerous videos over numerous languages, video resolutions and extensions and I can't seem to break it anymore. If you are an experienced tester, please try and let me know.
 # - A very special thanks to: another-danny for improving upon the script. Video res formats are now much better and streamlined. He also added some good bash code hygiene practices I was unfamiliar with.
 # - Added native yt-dlp --get-title and --get-filename flags, fully fixing any complications with video titles. $ [] and other symbols. Even languages, will now no longer affect outputs. This band-aid, I have noticed slightly more latency towards the start and end of the script but honestly, it's much better than trying to develop my own messy symbol parser.
-# - Performing sanitization on my inputs, printf to replace echoes, read's are now strictly for limiting inputs i.e. -nX (x being how many characters I allow users to input)
+# - Performing sanitization on my inputs using bash best practices, printf to replace echoes, read's are now strictly for limiting inputs i.e. -nX (x being how many characters I allow users to input)
 
 printf "Input search string [Song | Music Artist | Youtuber]: "
 read -rn1 -- search
