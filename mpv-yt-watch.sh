@@ -18,7 +18,7 @@
 # - Performing sanitization on my inputs using bash best practices, printf to replace echoes, read's are now strictly for limiting inputs i.e. -nX (x being how many characters I allow users to input)
 
 printf "Input search string [Song | Music Artist | Youtuber]: "
-read -rn1 -- search
+read -r -- search
 if [[ -z "$search" ]]; then
   printf "Invalid input! Please try again!"
   exit 1;
