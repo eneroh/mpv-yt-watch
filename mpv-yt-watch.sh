@@ -20,7 +20,7 @@
 printf "Input search string [Song | Music Artist | Youtuber]: "
 read -r -- search
 if [[ -z "$search" ]]; then
-  printf "\nInvalid input! Please try again!"
+  printf "Invalid input! Please try again!"
   exit 1;
 else
   printf "You are searching for: $search"
@@ -29,11 +29,11 @@ else
   videoUrl="https://youtube.com/watch?v=$videoUrl"
   
   title=$(yt-dlp --get-title "$videoUrl")
-  printf "\nVideo located: $title"
+  printf "\nVideo located: $title\n"
   searchFormat=$(yt-dlp ytsearch1:"$videoUrl" --list-formats)
 
-  formatExt=$(printf "\n${searchFormat}" | grep -e 'webm\|mp4' | grep -v 'audio only' | awk '{print $2;}' | sort -u | nl)
-  printf "\n$formatExt"
+  formatExt=$(printf "${searchFormat}" | grep -e 'webm\|mp4' | grep -v 'audio only' | awk '{print $2;}' | sort -u | nl)
+  printf "$formatExt"
   printf "\nChoose extension format (Default: empty) [1-2]: " 
   read -rn1 -- formatExt
   case $formatExt in
@@ -46,11 +46,11 @@ else
 	*)
 	;;
   esac
+  printf "\n"
+  formattedSearch=$(printf "${searchFormat}" | grep -e '144p\|240p\|480p\|720p\|1080p\|1440p\|2160p' | awk '{print $14;}' | tr -d ',' | uniq)
 
-  formattedSearch=$(printf "\n${searchFormat}" | grep -e '144p\|240p\|480p\|720p\|1080p\|1440p\|2160p' | awk '{print $14;}' | tr -s '\n' | tr -d ',' | uniq)
-
-  formattedLine=$(printf "\n$formattedSearch" | sed -e :a -e '$!N; s/\n/ | /; ta' | sed -e 's/p60//g' | sed -e 's/p//g')
-  printf "\n${formattedSearch[@]}"$'\n'"Choose video resolution format (Default: best) [${formattedLine}]: " 
+  formattedLine=$(printf "$formattedSearch" | sed -e :a -e '$!N; s/\n/ | /; ta' | sed -e 's/p60//g' | sed -e 's/p//g')
+  printf "${formattedSearch[@]}"$'\n'"Choose video resolution format (Default: best) [${formattedLine}]: " 
   read -rn4 -- formatRes
   formatRes=${formatRes:-$(printf "${formattedSearch[@]}" | sort -t p -n -k 1 | tail -1 | sed -e 's/p//g')}
 
