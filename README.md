@@ -27,7 +27,7 @@ A command line utility combining both mpv and yt-dlp to allow users to watch and
 - Notify-send notification connectivity is now in place. Provide feedback on positive or negative
 - Simplified and sanitized both inputs and outputs
 - Full script bash validation with no errors
-- print formatting is done in its entirety: unsigned integers, strings, escape seq. handling etc.
+- printf formatting is done in its entirety: unsigned integers, strings, escape seq. handling etc.
 - Added native yt-dlp commands to improve outputs
 
 ## Special Thanks ##
