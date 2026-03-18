@@ -16,6 +16,13 @@
 # - A very special thanks to: another-danny for improving upon the script. Video res formats are now much better and streamlined. He also added some good bash code hygiene practices I was unfamiliar with.
 # - Added native yt-dlp --get-title and --get-filename flags, fully fixing any complications with video titles. $ [] and other symbols. Even languages, will now no longer affect outputs. This band-aid, I have noticed slightly more latency towards the start and end of the script but honestly, it's much better than trying to develop my own messy symbol parser.
 # - Performing sanitization on my inputs using bash best practices, printf to replace echoes, read's are now strictly for limiting inputs i.e. -nX (x being how many characters I allow users to input)
+# - Simplifying the video res related inputs, instead of a 4 digit input (the video resolution), I've returned it back to numbers like before and also like the previous input option for ext.
+# - Added line counts for formatRes and formatExt, allowing for dynamic counts for a all videos
+# - Default for video resolution height has been changed to an exit, too much of a hassle trying to figure out the best default value. You try and cheat the input, you going back to the beginning, enjoy LMAO (:<
+# - Going to remove some very useful code that made resolution outputs and inputs more dynamic but ultimately, it's just easier having a 1 digit input
+# - For line counts to work, I had to add an a new line to the end of relevant printf related variables
+# - Added notify-send to script. Acting as a sort of rich presence kind of thing, tapping into the notification system? It looks kind of cool on window managers. I used to run one and I really liked this feature with mpd and ncmpcpp. IF ANYONE HATES IT. LET ME KNOW AND I WILL REMOVE
+# - Comments are going to be deleted after the next commit, if you are reading this. You are reading history. But thanks for reading these comments nonetheless.
 
 printf "Input search string [Song | Music Artist | Youtuber]: "
 read -r -- search
@@ -34,44 +41,33 @@ else
 
   formatExt=$(printf "${searchFormat}" | grep -e 'webm\|mp4' | grep -v 'audio only' | awk '{print $2;}' | sort -u | nl)
   printf "$formatExt"
-  printf "\nChoose extension format (Default: empty) [1-2]: " 
+  lineCountFE=$(printf "$formatExt\n" | wc -l)
+  printf "\nChoose extension format (Default: webm) [1-$lineCountFE]: " 
   read -rn1 -- formatExt
+  
   case $formatExt in
-	1)
-		ext=[ext=mp4]
-	;;
-	2)
-		ext=[ext=webm]
-	;;
-	*)
-	;;
+	1)  ext=mp4  ;;
+	2)  ext=webm  ;;
+	*)  ext=webm  ;;
   esac
-  printf "\n"
-  formattedSearch=$(printf "${searchFormat}" | grep -e '144p\|240p\|480p\|720p\|1080p\|1440p\|2160p' | awk '{print $14;}' | tr -d ',' | uniq)
-
-  formattedLine=$(printf "$formattedSearch" | sed -e :a -e '$!N; s/\n/ | /; ta' | sed -e 's/p60//g' | sed -e 's/p//g')
-  printf "${formattedSearch[@]}"$'\n'"Choose video resolution format (Default: best) [${formattedLine}]: " 
-  read -rn4 -- formatRes
-  formatRes=${formatRes:-$(printf "${formattedSearch[@]}" | sort -t p -n -k 1 | tail -1 | sed -e 's/p//g')}
+  
+  formatRes=$(printf "${searchFormat}" | grep -e '144p\|240p\|480p\|720p\|1080p\|1440p\|2160p' | awk '{print $14;}' | tr -d ',' | uniq | nl)
+  printf "\n$formatRes\n"
+  lineCountFR=$(printf "$formatRes\n" | wc -l)
+  printf "Choose video resolution format [1-$lineCountFR]: "
+  read -rn1 -- formatRes
 
   case $formatRes in
-	144)	
-	;;
-	240)
-	;;
-	480)
-	;;
-	720)
-	;;
-	1080)
-	;;
-	1440)
-	;;
-	2160)
-	;;
-	*)
-		printf "\nInvalid option! Please try again"
-		exit 1;
+	1)  h=144  ;;
+	2)  h=240  ;;
+	3)  h=480  ;;
+	4)  h=720  ;;
+	5)  h=1080  ;;
+	6)  h=1440  ;;
+	7)  h=2160  ;;
+	*)  
+		printf "Invalid Input, please try again." 
+		exit 1;  
 	;;
   esac
 
@@ -86,12 +82,14 @@ else
 		result=$(yt-dlp --get-filename "$videoUrl")
 		printf "\nYour video has been saved as: $result"
 		printf "\nNow Streaming: $title\n"
-		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
+		notify-send "mpv-yt-watch" "Now Streaming: $title"
+		mpv --ytdl-format="bestvideo[ext=$ext][height=$h]+bestaudio" "$videoUrl"
 		printf "Thank you for using mpv-yt-watch" 
 	;;
 	n|N) 
 		printf "\nNow Streaming: $title\n"
-		mpv --ytdl-format="bestvideo$ext[height=$formatRes]+bestaudio" "$videoUrl"
+		notify-send "mpv-yt-watch" "Now Streaming: $title"
+		mpv --ytdl-format="bestvideo[ext=$ext][height=$h]+bestaudio" "$videoUrl"
 		printf "Thank you for using mpv-yt-watch" 
 	;;
 	*)
