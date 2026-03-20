@@ -17,13 +17,13 @@ mpv-yt-watch intends to: K.I.S.S. Keep it simple, stupid.
 S - Simple: Minimal dependencies (mpv, yt-dlp that's about it)
 <br>
 <br>
-U - User focused: You do not NEED degree to use this and inputs and code will be clear and concise (exampe text and expanded flags)
+U - User focused: You do not NEED a degree to use this. Inputs and code will be clear and concise (example text and expanded flags respectively)
 <br>
 <br>
-S - Speed oriented: The command time will be utilized when testing similar commands to determine the fastest. Ensuring quick outputs [time <command>], as well as, keep big/time consuming commands outside of loops
+S - Speed oriented: The command: time will be utilized when testing similar commands to determine the fastest. Ensuring quick outputs [time example], as well as, keep big/time consuming commands outside of loops
 <br>
 <br>
-C - Compatible: The ability to work the same/similar on as many devices as possible with limited degraded performance (i.e. smartphones, pc's, desktops, servers, maybe IoT [try to run mpv-yt-watch on a fridge lol])
+C - Compatible: The ability to work the same/similar on as many devices as possible with limited degraded performance (i.e. smartphones, pc's: laptops/desktops, servers, maybe IoT [try to run mpv-yt-watch on a fridge lol])
 <br>
 <br>
 M - Minimal: Utilize bash functionality as much as possible instead of relying on other outside packages, as well as, utilize dependencies flags/tacs where necessary and not where excessive
