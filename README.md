@@ -30,9 +30,6 @@ M - Minimal: Utilize bash functionality as much as possible instead of relying o
 <br>
 <br>
 F - Follow rules: Follow bash best practices, as closely as possible & validate script through shellcheck to ensure there are no errors
-<br>
-<br>
-In short, SUSC MF
 
 ## Potential upgrades ##
 - Internal script flags/tacs to speed past the interactivity and give the power user immediate control/less handholding
