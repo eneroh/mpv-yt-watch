@@ -14,6 +14,9 @@ A command line utility combining both mpv and yt-dlp to allow users to watch and
 mpv-yt-watch intends to: K.I.S.S. Keep it simple, stupid.
 <br>
 <br>
+F - Follow rules: Follow bash best practices, as closely as possible & validate script through shellcheck to ensure there are no errors
+<br>
+<br>
 S - Simple: Minimal dependencies (mpv, yt-dlp, ffmpeg and I guess bash)
 <br>
 <br>
@@ -23,13 +26,10 @@ U - User focused: You do not NEED a degree to use this. Inputs and code will be 
 S - Speed oriented: The command: time will be utilized when testing similar commands to determine the fastest. Ensuring quick outputs [time example], as well as, keep big/time consuming commands outside of loops
 <br>
 <br>
-C - Compatible: The ability to work the same/similar on as many devices as possible with limited degraded performance (i.e. smartphones, pc's: laptops/desktops, servers, maybe IoT [try to run mpv-yt-watch on a fridge lol])
-<br>
-<br>
 M - Minimal: Utilize bash functionality as much as possible instead of relying on other outside packages, as well as, utilize dependencies flags/tacs where necessary and not where excessive
 <br>
 <br>
-F - Follow rules: Follow bash best practices, as closely as possible & validate script through shellcheck to ensure there are no errors
+C - Compatible: The ability to work the same/similar on as many devices as possible with limited degraded performance (i.e. smartphones, pc's: laptops/desktops, servers, maybe IoT [try to run mpv-yt-watch on a fridge lol])
 
 ## Potential upgrades ##
 - Internal script flags/tacs to speed past the interactivity and give the power user immediate control/less handholding
