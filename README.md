@@ -41,7 +41,7 @@ S - Speed oriented: The command: time will be utilized when testing similar comm
 M - Minimal: Utilize bash functionality as much as possible instead of relying on other outside packages, as well as, utilize dependencies flags/tacs where necessary and not where excessive
 <br>
 <br>
-C - Compatible: The ability to work the same/similar on as many devices as possible with limited degraded performance (i.e. smartphones, pc's: laptops/desktops, servers, maybe IoT [try to run mpv-yt-watch on a fridge lol])
+C - Compatible: The ability to work the same/similar on as many devices as possible with limited degraded performance (i.e. smartphones, laptops/desktops, servers, maybe IoT [try to run mpv-yt-watch on a fridge])
 
 ## Potential upgrades ##
 - Internal script flags/tacs to speed past the interactivity and give the power user immediate control/less handholding
