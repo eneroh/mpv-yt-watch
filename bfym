@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-### mpv-yt-watch ###
+### bfym ###
 
 set -euo pipefail
-
 
 printf "Input search string [Song | Music Artist | Youtuber]: "
 read -r -- search
