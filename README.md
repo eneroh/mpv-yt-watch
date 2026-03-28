@@ -73,4 +73,4 @@ shellcheck - making my code better
 geeksforgeeks.org - the printf article was a life saver
 
 ## Known Issues ##
-- If you use this script excessively on the same video your ip does get logged as a bot for an hour or two. Sign in apparently fixes this, haven't tried this but not particularly a hassle. VPN is a workaround. This issue is now very limited, unless you download videos constantly... Hours on end.
+- If you use this script excessively on the same video your ip does get logged as a bot for an hour or two. Sign in apparently fixes it, haven't tried this but not particularly a hassle. VPN is a workaround. This issue is now very limited, unless you download videos constantly... Hours on end.
