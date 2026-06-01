@@ -68,13 +68,13 @@ else
       printf "%b" "\nNow Streaming: $title\n"
       notify-send "mpv-yt-watch" "Now Streaming: $title"
       mpv --ytdl-format="bestvideo[ext=$ext][height=$h]+bestaudio" "$videoUrl"
-      printf "Thank you for using mpv-yt-watch".
+      printf "Thank you for using bfym".
     ;;
     n|N)
       printf "%b" "\nNow Streaming: $title\n"
       notify-send "mpv-yt-watch" "Now Streaming: $title"
       mpv --ytdl-format="bestvideo[ext=$ext][height=$h]+bestaudio" "$videoUrl"
-      printf "Thank you for using mpv-yt-watch". 
+      printf "Thank you for using bfym". 
     ;;
     *)
       printf "Invalid input! Please try again".

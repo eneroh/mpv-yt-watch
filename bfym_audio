@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+### bfym_audio ###
+
+set -euo pipefail
+
+printf "Input search string [Song | Music Artist | Youtuber]: "
+read -r -- search
+
+if [[ -z "$search" ]]; then
+  printf "Invalid input! Please try again."
+  exit 1;
+else
+  printf "%s" "You are searching for: $search"
+
+  videoUrl=$(yt-dlp --get-id ytsearch1:"$search")
+  videoUrl="https://youtube.com/watch?v=$videoUrl"
+
+  title=$(yt-dlp --get-title "$videoUrl")
+
+  printf "%b" "\nVideo located: $title\n"
+  searchFormat=$(yt-dlp ytsearch1:"$videoUrl" --list-formats)
+  formatExt=$(printf "%s" "${searchFormat}" | grep --invert-match 'video only' |  grep --regexp 'opus'  | awk '{print $14};' | sort --unique --numeric-sort --reverse | nl)
+  printf "%s" "$formatExt"
+  arrayFE=(${formatExt[@]})
+  lineCountFE=$(printf "%b" "$formatExt\n" | wc --lines)
+  printf "%b" "\nChoose audio quality (Default: best) [higher = better] [1-$lineCountFE]: "
+  read -rn1 -- formatExt
+
+  case $formatExt in
+	  1)  aq=${arrayFE[0]}  ;;
+	  2)  aq=${arrayFE[1]}  ;;
+	  *)  (${arrayFE[0]})  ;;
+  esac
+
+    #stream video (webm format for streaming)
+    printf "%b" "\nWould you like to download this content? [y/N] "
+    read -rn1 -- dlConfirm
+    dlConfirm=${dlConfirm:-N}
+
+  case $dlConfirm in
+    y|Y)
+      printf "%b" "\nDownloading file\n"
+      audioDl=$(yt-dlp "$videoUrl" | tail --lines=1)
+      result=$(yt-dlp -x --audio-format opus --audio-quality=$aq $videoUrl)
+      printf "%b" "\nYour audio has been saved as $result"
+      streamUrl=$(yt-dlp -g -f bestaudio "$videoUrl")
+      mpv "$streamUrl"
+      printf "%b" "\nNow Streaming: $title\n"
+      notify-send "bfym_audio" "Now Streaming: $title"
+      printf "Thank you for using bfym_audio"
+    ;;
+    n|N)
+      printf "%b" "\nNow Streaming: $title\n"
+      streamUrl=$(yt-dlp -g -f bestaudio "$videoUrl")
+      notify-send "bfym_audio" "Now Streaming: $title"
+      mpv "$streamUrl"
+      printf "Thank you for using bfym_audio"
+    ;;
+    *)
+      printf "Invalid input! Please try again"
+      exit 1;
+    ;;
+  esac
+fi
+
+
