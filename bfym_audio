@@ -22,7 +22,7 @@ else
   searchFormat=$(yt-dlp ytsearch1:"$videoUrl" --list-formats)
   formatExt=$(printf "%s" "${searchFormat}" | grep --invert-match 'video only' |  grep --regexp 'opus'  | awk '{print $14};' | sort --unique --numeric-sort --reverse | nl)
   printf "%s" "$formatExt"
-  arrayFE=(${formatExt[@]})
+  arrayFE=("${formatExt[@]}")
   lineCountFE=$(printf "%b" "$formatExt\n" | wc --lines)
   printf "%b" "\nChoose audio quality (Default: best) [higher = better] [1-$lineCountFE]: "
   read -rn1 -- formatExt
@@ -41,8 +41,7 @@ else
   case $dlConfirm in
     y|Y)
       printf "%b" "\nDownloading file\n"
-      audioDl=$(yt-dlp "$videoUrl" | tail --lines=1)
-      result=$(yt-dlp -x --audio-format opus --audio-quality=$aq $videoUrl)
+      result=$(yt-dlp -x --audio-format opus --audio-quality="$aq" "$videoUrl" | tail --lines=1)
       printf "%b" "\nYour audio has been saved as $result"
       streamUrl=$(yt-dlp -g -f bestaudio "$videoUrl")
       mpv "$streamUrl"
